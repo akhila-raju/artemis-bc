@@ -21,7 +21,7 @@ public class UInt384 {
     this.value = value;
   }
 
-  public UInt384(UInt64 uint) {
+  public UInt384(UInt384 uint) {
     this.value = uint.getValue();
   }
 

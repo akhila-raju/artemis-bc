@@ -14,6 +14,7 @@
 package tech.pegasys.artemis;
 
 import tech.pegasys.artemis.util.bytes.Bytes32;
+import tech.pegasys.artemis.util.bytes.Bytes48;
 
 public final class Constants {
 
@@ -28,6 +29,7 @@ public final class Constants {
   public static final int BEACON_CHAIN_SHARD_NUMBER                      = (int) Math.pow(2, 64) - 1;
   public static final String BLS_WITHDRAWAL_PREFIX_BYTE                  = "0x00";
   public static final int MAX_CASPER_VOTES                               = (int) Math.pow(2, 10); // 1,024 votes
+  public static Bytes48[] EMPTY_SIGNATURE                                       = new Bytes48[]{Bytes48.FALSE, Bytes48.FALSE};
 
   // Deposit contract
   //  static final Address DEPOSIT_CONTRACT_ADDRESS               =  Value is still TBD
@@ -91,6 +93,7 @@ public final class Constants {
             + "\nBEACON_CHAIN_SHARD_NUMBER: " + BEACON_CHAIN_SHARD_NUMBER
             + "\nBLS_WITHDRAWAL_CREDENTIALS: " + BLS_WITHDRAWAL_PREFIX_BYTE
             + "\nMAX_CASPER_VOTES: " + MAX_CASPER_VOTES
+            + "\nEMPTY_SIGNATURE: " + EMPTY_SIGNATURE
 
             + "\n\n--Deposit contract--"
 //            + "\nDEPOSIT_CONTRACT_ADDRESS: " + DEPOSIT_CONTRACT_ADDRESS

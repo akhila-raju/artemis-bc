@@ -14,6 +14,7 @@
 package tech.pegasys.artemis.datastructures.BeaconChainOperations;
 
 import tech.pegasys.artemis.ethereum.core.Hash;
+import tech.pegasys.artemis.util.bytes.Bytes48;
 import tech.pegasys.artemis.util.uint.UInt384;
 
 public class DepositInput {
@@ -21,9 +22,14 @@ public class DepositInput {
   private UInt384 pubkey;
   private Hash withdrawal_credentials;
   private Hash randao_commitment;
-  private UInt384[] proof_of_possession;
+  private Bytes48[] proof_of_possession;
 
-  public DepositInput() {
-
+  public DepositInput(UInt384 pubkey, Hash withdrawal_credentials, Hash randao_commitment,
+                      Bytes48[] proof_of_possession) {
+    this.pubkey = pubkey;
+    this.withdrawal_credentials = withdrawal_credentials;
+    this.randao_commitment = randao_commitment;
+    this.proof_of_possession = proof_of_possession;
   }
+
 }

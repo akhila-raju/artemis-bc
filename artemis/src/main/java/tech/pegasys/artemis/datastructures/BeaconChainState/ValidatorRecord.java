@@ -20,7 +20,7 @@ import tech.pegasys.artemis.util.uint.UInt64;
 public class ValidatorRecord {
 
   public UInt384 pubkey;
-  private Hash withdrawal_credentials;
+  public Hash withdrawal_credentials;
   private Hash randao_commitment;
   private UInt64 randao_layers;
   public double balance;
