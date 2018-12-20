@@ -20,7 +20,7 @@ public class Deposit {
 
   private Hash[] merkle_branch;
   private UInt64 merkle_tree_index;
-  private DepositData deposit_data;
+  public DepositData deposit_data;
 
   public Deposit() {
 
