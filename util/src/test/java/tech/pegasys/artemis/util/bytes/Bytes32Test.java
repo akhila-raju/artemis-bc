@@ -14,6 +14,7 @@
 package tech.pegasys.artemis.util.bytes;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static tech.pegasys.artemis.util.bytes.Bytes32.intToBytes32;
 
 import org.junit.Test;
 
@@ -30,6 +31,22 @@ public class Bytes32Test {
   }
 
   @Test
+  public void convertIntToBytes32() {
+    Bytes32 expected = Bytes32.wrap(new byte[]
+        {(byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0,
+            (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0,
+            (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0,
+            (byte) 0, (byte) 0, (byte) 0, (byte) 20, (byte) 103, (byte) -62, (byte) 41});
+    Bytes32 actual = intToBytes32(342344233);
+    assertThat(actual).isEqualTo(expected);
+  }
+
+  @Test
+  public void lessThan32Bytes() {
+    // TODO(@akhila-raju)
+  }
+
+  @Test
   public void leftPadAValueToBytes32() {
     Bytes32 b32 = Bytes32.leftPad(BytesValue.of(1, 2, 3));
     assertThat(b32.size()).isEqualTo(32);
@@ -39,6 +56,18 @@ public class Bytes32Test {
     assertThat(b32.get(29)).isEqualTo((byte) 1);
     assertThat(b32.get(30)).isEqualTo((byte) 2);
     assertThat(b32.get(31)).isEqualTo((byte) 3);
+  }
+
+  @Test
+  public void rightPadAValueToBytes32() {
+    Bytes32 b32 = Bytes32.rightPad(BytesValue.of(1, 2, 3));
+    assertThat(b32.size()).isEqualTo(32);
+    assertThat(b32.get(1)).isEqualTo((byte) 1);
+    assertThat(b32.get(2)).isEqualTo((byte) 2);
+    assertThat(b32.get(3)).isEqualTo((byte) 3);
+    for (int i = 3; i < 32; ++i) {
+      assertThat(b32.get(i)).isEqualTo((byte) 0);
+    }
   }
 
   @Test(expected = IllegalArgumentException.class)

@@ -19,6 +19,8 @@ import tech.pegasys.artemis.util.uint.Int256;
 import tech.pegasys.artemis.util.uint.UInt256;
 import tech.pegasys.artemis.util.uint.UInt256Bytes;
 
+import java.util.Arrays;
+
 
 /**
  * A {@link BytesValue} that is guaranteed to contain exactly 32 bytes.
@@ -31,6 +33,32 @@ public interface Bytes32 extends BytesValue {
   Bytes32 FALSE = UInt256Bytes.of(0);
   Bytes32 TRUE = UInt256Bytes.of(1);
   Bytes32 ZERO = wrap(new byte[32]);
+
+
+  static boolean lessThan32Bytes(BytesValue value) {
+    // TODO(@akhila-raju)
+    return true;
+  }
+
+  /**
+   * Converts int to Bytes32 in Big Endian byte order.
+   *
+   * @param seed  converted
+   * @return      converted Bytes48
+   * @throws IllegalArgumentException if seed is a negative value.
+   */
+  static Bytes32 intToBytes32(int seed) {
+    byte[] bytes = new byte[32];
+    if(seed < 0) {
+      Arrays.fill(bytes, 0, 28, (byte) 0xFF);
+    } else {
+      Arrays.fill(bytes, 0, 28, (byte) 0x0);
+    }
+    for(int i = 28; i < 32; ++i) {
+      bytes[i] = (byte) ((seed >> ((31-i) * 8)) & 0xFF);
+    }
+    return Bytes32.wrap(bytes);
+  }
 
   /**
    * Wraps the provided byte array, which must be of length 32, as a {@link Bytes32}.
@@ -102,6 +130,22 @@ public interface Bytes32 extends BytesValue {
 
     MutableBytes32 bytes = MutableBytes32.create();
     value.copyTo(bytes, SIZE - value.size());
+    return bytes;
+  }
+
+  /**
+   * Right pad a {@link BytesValue} with zero bytes to create a {@link Bytes32}
+   *
+   * @param value The bytes value pad.
+   * @return A {@link Bytes32} that exposes the right-padded bytes of {@code value}.
+   * @throws IllegalArgumentException if {@code value.size() &gt; 32}.
+   */
+  static Bytes32 rightPad(BytesValue value) {
+    checkArgument(value.size() <= SIZE, "Expected at most %s bytes but got only %s", SIZE,
+        value.size());
+
+    MutableBytes32 bytes = MutableBytes32.create();
+    value.copyTo(bytes,0);
     return bytes;
   }
 
